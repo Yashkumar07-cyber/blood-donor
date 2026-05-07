@@ -21,17 +21,23 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
+  'https://blood-donor-nine-nu.vercel.app',
+  'https://blood-donor-3egm9fir4-yashkumar07-cybers-projects.vercel.app',
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
 const app = express();
 const httpServer = http.createServer(app);
 
+// Trust Render's proxy
+app.set('trust proxy', 1);
+
 // Socket.io setup
 const io = new Server(httpServer, {
   cors: {
     origin: allowedOrigins,
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
