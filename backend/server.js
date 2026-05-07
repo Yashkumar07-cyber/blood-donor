@@ -17,13 +17,20 @@ const requestRoutes = require('./routes/requestRoutes');
 // Connect to MongoDB
 connectDB();
 
+// Allowed origins for CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 const app = express();
 const httpServer = http.createServer(app);
 
 // Socket.io setup
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
 });
@@ -34,13 +41,11 @@ app.set('io', io);
 io.on('connection', (socket) => {
   console.log(`🔌 Socket connected: ${socket.id}`);
 
-  // Donor joins their room to receive targeted notifications
   socket.on('join_donor_room', (donorId) => {
     socket.join(`donor_${donorId}`);
     console.log(`Donor ${donorId} joined their room`);
   });
 
-  // Seeker joins request room for real-time updates
   socket.on('join_request_room', (requestId) => {
     socket.join(`request_${requestId}`);
   });
@@ -52,11 +57,20 @@ io.on('connection', (socket) => {
 
 // Security middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Too many requests, please try again later.',
 });
@@ -71,6 +85,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Blood Donor Finder API is running 🩸' });
 });
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'Blood Donor Finder API 🩸' });
+});
+
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/donors', donorRoutes);
@@ -81,7 +100,7 @@ app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
 });
 
-// Error handler (must be last)
+// Error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
