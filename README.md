@@ -24,11 +24,11 @@
 
 | | |
 |---|---|
-| ![Home](screenshots/home.png) | ![Donors List](screenshots/donors-list.png) |
+| ![Home](screenshot/home.png) | ![Donors List](screenshot/donors-list.png) |
 | **Home — Search by blood group** | **Find Donors — List view with filters** |
-| ![Map View](screenshots/map-view.png) | ![Register](screenshots/register.png) |
+| ![Map View](screenshot/map-view.png) | ![Register](screenshot/register.png) |
 | **Map View — Donors on Leaflet map** | **Register — Seeker or Donor** |
-| ![Create Request](screenshots/create-request.png) | ![Request Form](screenshots/request-submit.png) |
+| ![Create Request](screenshot/create-request.png) | ![Request Form](screenshot/request-submit.png) |
 | **Emergency Request — Patient info & urgency** | **Emergency Request — Submit** |
 
 ---
