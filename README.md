@@ -1,108 +1,99 @@
-# 🩸 Blood Donor Finder — Full Stack App
+<div align="center">
 
-Find and connect with nearby blood donors in emergencies. Real-time alerts, geolocation search, and donor registry.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=🩸%20BloodConnect&fontSize=55&fontColor=fff&animation=fadeIn&fontAlignY=38&desc=Find%20Blood%20Donors%20Near%20You%20%E2%80%94%20Save%20Lives%20Instantly&descAlignY=62&descSize=18" width="100%"/>
 
----
+<br/>
 
-## 📁 Project Structure
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-```
-blood-donor-finder/
-├── backend/                    # Node.js + Express API
-│   ├── config/
-│   │   └── db.js               # MongoDB connection
-│   ├── controllers/
-│   │   ├── authController.js   # Register, Login, Me
-│   │   ├── donorController.js  # Donor CRUD + geosearch
-│   │   └── requestController.js# Blood request + notify
-│   ├── middleware/
-│   │   ├── auth.js             # JWT protect + authorize
-│   │   └── errorHandler.js     # Global error handler
-│   ├── models/
-│   │   ├── User.js             # User schema
-│   │   ├── Donor.js            # Donor + 2dsphere index
-│   │   └── BloodRequest.js     # Request + matched donors
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── donorRoutes.js
-│   │   └── requestRoutes.js
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js               # Express + Socket.io entry
-│
-└── frontend/                   # React + Vite + Tailwind
-    ├── src/
-    │   ├── components/
-    │   │   ├── common/
-    │   │   │   ├── Navbar.jsx
-    │   │   │   └── BloodBadge.jsx
-    │   │   ├── donor/
-    │   │   │   └── DonorCard.jsx
-    │   │   └── map/
-    │   │       └── DonorMap.jsx  # Leaflet map (free, no key)
-    │   ├── context/
-    │   │   └── AuthContext.jsx   # Auth state + JWT
-    │   ├── hooks/
-    │   │   └── useSocket.js      # Real-time donor alerts
-    │   ├── pages/
-    │   │   ├── Home.jsx
-    │   │   ├── Login.jsx
-    │   │   ├── Register.jsx
-    │   │   ├── FindDonors.jsx    # Map + list view + filters
-    │   │   ├── Dashboard.jsx
-    │   │   ├── CreateRequest.jsx # Emergency request form
-    │   │   └── DonorRegister.jsx # Donor onboarding
-    │   ├── services/
-    │   │   └── api.js            # Axios + all API calls
-    │   ├── App.jsx               # Router + protected routes
-    │   └── main.jsx
-    ├── .env.example
-    ├── package.json
-    ├── tailwind.config.js
-    └── vite.config.js
-```
+<br/>
+
+> **Connect with verified blood donors in emergencies.**
+> Find donors by blood group & location, create emergency requests, and get real-time alerts — all in one app.
+
+</div>
 
 ---
 
-## 🚀 Quick Start
+## 📸 Preview
 
-### 1. Backend Setup
+| | |
+|---|---|
+| ![Home](screenshots/home.png) | ![Donors List](screenshots/donors-list.png) |
+| **Home — Search by blood group** | **Find Donors — List view with filters** |
+| ![Map View](screenshots/map-view.png) | ![Register](screenshots/register.png) |
+| **Map View — Donors on Leaflet map** | **Register — Seeker or Donor** |
+| ![Create Request](screenshots/create-request.png) | ![Request Form](screenshots/request-submit.png) |
+| **Emergency Request — Patient info & urgency** | **Emergency Request — Submit** |
+
+---
+
+## ✨ Features
+
+- 🗺️ **Interactive Map** — Leaflet map showing nearby donors (no API key needed)
+- 📍 **GPS Search** — Find donors within a custom radius using your location
+- 🔴 **Blood Type Matching** — Auto-matches compatible blood groups
+- ⚡ **Real-time Alerts** — Socket.io notifications when emergency requests are created
+- 🔐 **JWT Auth** — Role-based access: Seeker / Donor / Admin
+- 🆘 **Emergency Requests** — Create requests with urgency levels (Normal / Urgent / Critical)
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite, Tailwind CSS |
+| Map | Leaflet + React-Leaflet *(free, no API key)* |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas (Mongoose + 2dsphere index) |
+| Auth | JWT + bcryptjs |
+| Real-time | Socket.io |
+
+---
+
+## 🚀 Local Setup
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Yashkumar07-cyber/blood-donor-finder.git
+cd blood-donor-finder
+```
+
+### 2. Backend
 
 ```bash
 cd backend
 npm install
-cp .env.example .env
-# Edit .env: add MONGODB_URI and JWT_SECRET
-npm run dev
-# Server runs on http://localhost:5000
+cp .env.example .env   # fill in MONGODB_URI and JWT_SECRET
+npm run dev            # runs on http://localhost:5000
 ```
 
-### 2. Frontend Setup
+### 3. Frontend
 
 ```bash
 cd frontend
 npm install
-cp .env.example .env
-# Edit .env if backend URL differs
-npm run dev
-# App runs on http://localhost:3000
+npm run dev            # runs on http://localhost:3000
 ```
 
----
+### Environment Variables
 
-## 🔑 Environment Variables
-
-**Backend `.env`:**
+**`backend/.env`**
 ```
-PORT=5000
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/blooddonor
-JWT_SECRET=your_secret_key_here
-JWT_EXPIRE=7d
-NODE_ENV=development
+JWT_SECRET=your_secret_here
+PORT=5000
 FRONTEND_URL=http://localhost:3000
 ```
 
-**Frontend `.env`:**
+**`frontend/.env`**
 ```
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
@@ -112,71 +103,50 @@ VITE_SOCKET_URL=http://localhost:5000
 
 ## 📡 API Endpoints
 
-### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Create account |
-| POST | `/api/auth/login` | Login |
-| GET | `/api/auth/me` | Get current user |
+**Auth** — `POST /api/auth/register` · `POST /api/auth/login` · `GET /api/auth/me`
 
-### Donors
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/donors/nearby?lat=&lng=&radius=&bloodGroup=` | Find nearby donors |
-| POST | `/api/donors` | Register as donor |
-| PUT | `/api/donors/me` | Update donor profile |
-| PATCH | `/api/donors/availability` | Toggle availability |
+**Donors** — `GET /api/donors/nearby?lat=&lng=&radius=&bloodGroup=` · `POST /api/donors` · `PATCH /api/donors/availability`
 
-### Blood Requests
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/requests` | Create emergency request |
-| GET | `/api/requests?lat=&lng=&radius=` | Get nearby requests |
-| PATCH | `/api/requests/:id/respond` | Donor responds |
-| GET | `/api/requests/my` | My requests |
+**Requests** — `POST /api/requests` · `GET /api/requests?lat=&lng=&radius=` · `PATCH /api/requests/:id/respond`
 
 ---
 
-## 🛠️ Tech Stack
+## 📁 Project Structure
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, Vite, Tailwind CSS |
-| Routing | React Router v6 |
-| Map | Leaflet + React-Leaflet (free, no API key) |
-| HTTP Client | Axios |
-| Real-time | Socket.io client |
-| Backend | Node.js, Express.js |
-| Database | MongoDB Atlas (Mongoose) |
-| Auth | JWT + bcryptjs |
-| Real-time | Socket.io |
-| Security | Helmet, CORS, Rate limiting |
-| Geolocation | MongoDB 2dsphere index + $near query |
-
----
-
-## 🌟 Key Features
-
-- 🗺️ **Map view** with Leaflet (free, no Google Maps API key needed)
-- 📍 **Geolocation search** — find donors within X km using GPS
-- 🔴 **Blood type compatibility** — auto-matches compatible donor groups
-- ⚡ **Real-time notifications** via Socket.io when emergency request is created
-- 🔐 **JWT authentication** with role-based access (seeker / donor / admin)
-- 📱 **Responsive design** works on mobile and desktop
-
----
-
-## 🚢 Deployment
-
-**Frontend → Vercel:**
-```bash
-cd frontend && npm run build
-# Deploy dist/ folder to Vercel
+```
+blood-donor-finder/
+├── backend/
+│   ├── controllers/        # authController, donorController, requestController
+│   ├── models/             # User, Donor (2dsphere), BloodRequest
+│   ├── routes/             # authRoutes, donorRoutes, requestRoutes
+│   ├── middleware/         # JWT auth, error handler
+│   └── server.js           # Express + Socket.io entry
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/          # Home, FindDonors, CreateRequest, Dashboard, Register
+    │   ├── components/     # Navbar, DonorCard, DonorMap, BloodBadge
+    │   ├── context/        # AuthContext (JWT state)
+    │   ├── hooks/          # useSocket (real-time alerts)
+    │   └── services/       # api.js (Axios calls)
+    └── vite.config.js
 ```
 
-**Backend → Render:**
-- Connect GitHub repo
-- Set root directory to `backend/`
-- Add environment variables in Render dashboard
+---
 
-**Database → MongoDB Atlas** (free tier available)
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create your branch: `git checkout -b feature/your-feature`
+3. Commit: `git commit -m "Add your feature"`
+4. Push & open a Pull Request
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
+
+**Made with ❤️ to save lives · ⭐ Star this repo if it helped you!**
+
+</div>
